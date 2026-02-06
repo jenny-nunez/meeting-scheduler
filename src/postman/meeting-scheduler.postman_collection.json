@@ -1,0 +1,372 @@
+{
+  "info": {
+    "_postman_id": "8dbe50d1-3fe9-42ce-86fc-129be9053204",
+    "name": "Api-Meetings",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31946655"
+  },
+  "item": [
+    {
+      "name": "post prueba exception controlada",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"meeting-001\",\r\n  \"participants\": [\"user1\", \"user2\", \"user3\"],\r\n  \"durationMinutes\": 60,\r\n  \"requiredEquipment\": [\"PROJECTOR\", \"WHITEBOARD\"],\r\n  \"preferEarlier\": true,\r\n  \"bufferBetweenMeetingsMinutes\": 15,\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-05T09:00:00\",\r\n      \"end\": \"2026-02-05T11:00:00\"\r\n    },\r\n    {\r\n      \"start\": \"2026-02-05T14:00:00\",\r\n      \"end\": \"2026-02-05T16:00:00\"\r\n    }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /meeting-requests",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /schedule/run – Ejecuta asignación",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/schedule/run",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "schedule",
+            "run"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST /meeting-requests idempotency",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Idempotency-Key",
+            "value": "abc-123-meeting-M1",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"participants\": [\"U1\"],\r\n  \"durationMinutes\": 30,\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ],\r\n  \"priority\": \"MEDIUM\",\r\n  \"preferEarlier\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "/api/scheduled/cancel",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Idempotency-Key",
+            "value": "abc-123-meeting-M1",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"participants\": [\"U1\"],\r\n  \"durationMinutes\": 30,\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ],\r\n  \"priority\": \"MEDIUM\",\r\n  \"preferEarlier\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/scheduled/1/cancel",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "scheduled",
+            "1",
+            "cancel"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /meeting-requests/{id}/explain",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/schedule",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "schedule"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET /meeting-requests/{id}/explain m1",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests/M1/explain",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests",
+            "M1",
+            "explain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET http://localhost:8080/api/rooms",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests/M1/explain",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests",
+            "M1",
+            "explain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET http://localhost:8080/api/rooms room 8",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests/M1/explain",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests",
+            "M1",
+            "explain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET http://localhost:8080/api/rooms room equipment",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 30,\r\n  \"priority\": 1,\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\"],\r\n  \"requiredEquipment\": [],\r\n  \"timeWindows\": [\r\n    {\r\n      \"start\": \"2026-02-06T10:00:00\",\r\n      \"end\": \"2026-02-06T11:00:00\"\r\n    }\r\n  ]\r\n}\r\n\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/meeting-requests/M1/explain",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "meeting-requests",
+            "M1",
+            "explain"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "http://localhost:8080/api/users/U1/availability",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"id\": \"M1\",\r\n  \"organizerId\": \"U1\",\r\n  \"durationMinutes\": 60,\r\n  \"priority\": \"HIGH\",\r\n  \"preferEarlier\": true,\r\n  \"participants\": [\"U1\",\"U2\",\"U3\"],\r\n  \"requiredEquipment\": [\"TV\"],\r\n  \"timeWindows\": [\r\n    { \"start\": \"2026-01-29T09:00:00\", \"end\": \"2026-01-29T12:00:00\" }\r\n  ]\r\n}\r\n",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/users/U1/availability",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "users",
+            "U1",
+            "availability"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
